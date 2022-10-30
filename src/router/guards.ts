@@ -12,7 +12,7 @@ const guards: Array<RouteRecordRaw> = [
         path: "/:catchAll(.*)",
         component: NotFound,
         beforeEnter: (to, from, next) => {
-            next({name: "notFound"});
+            next({ name: "notFound" });
         }
     }
 ];

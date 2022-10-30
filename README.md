@@ -9,11 +9,11 @@
 
 - Vue 3.2.41
 - Vue-Cli
-  - Babel 5.0.8
-  - Router 5.0.8
-  - TypeScript 5.0.8
-  - Vuex 5.0.8
-  - Service 5.0.8
+    - Babel 5.0.8
+    - Router 5.0.8
+    - TypeScript 5.0.8
+    - Vuex 5.0.8
+    - Service 5.0.8
 - TypeScript 4.5.5
 - Element Plus 2.2.19
 - Element Plus Icons 2.0.10
