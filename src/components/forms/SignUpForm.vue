@@ -15,7 +15,8 @@
         <el-form-item prop="vCode" label="验证码">
             <el-input type="text" v-model="signUpForm.vCode">
                 <template #append>
-                    <el-button class="getVCodeButton" type="primary" @click="getVCode">获取验证码</el-button>
+                    <el-button v-show="!timer.isCountdown" class="getVCodeButton" type="primary" @click="getVCode">获取验证码</el-button>
+                    <el-button v-show="timer.isCountdown" disabled>{{ timer.count }}秒后可获取</el-button>
                 </template>
             </el-input>
         </el-form-item>
@@ -40,6 +41,28 @@
     import router from "@/router";
 
     const signUpFormRef = ref<FormInstance>();
+
+    const timer = reactive({
+        id: -1,
+        isCountdown: false,
+        count: 0,
+
+        start() {
+            this.isCountdown = true;
+            this.count = 60;
+            this.id = setInterval(() => {
+                if (this.count > 0 && this.count <= 60)
+                    this.count--;
+                else
+                    this.stop();
+            }, 1000);
+        },
+        stop() {
+            this.isCountdown = false;
+            clearInterval(this.id);
+            this.id = -1;
+        }
+    });
 
     const requestingService = ref(false);
     const signUpForm = reactive({
@@ -102,14 +125,13 @@
             return;
         }
 
-        const params = {
-            email: signUpForm.email,
-            taskType: 1
-        };
+        timer.start();
+        const params = { email: signUpForm.email, taskType: 1 };
         axios(ApiUrl.sendVCode, { params, timeout: 3000 }).then((res) => {
         }).catch((error) => {
             showMessage("请求超时，请稍后重试。", "error");
             requestingService.value = false;
+            timer.stop();
         });
     }
 
@@ -146,6 +168,8 @@
     .getVCodeButton {
         background-color: var(--el-button-bg-color) !important;
         color: white !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
     }
 
     .getVCodeButton:hover {
