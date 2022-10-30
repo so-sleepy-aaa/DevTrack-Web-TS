@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-    import SignInForm from "@/components/form/SignInForm";
+    import SignInForm from "@/components/forms/SignInForm";
 </script>
 
 <style scoped>
