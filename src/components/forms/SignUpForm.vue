@@ -168,6 +168,8 @@
     .getVCodeButton {
         background-color: var(--el-button-bg-color) !important;
         color: white !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
     }
 
     .getVCodeButton:hover {
