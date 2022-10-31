@@ -22,7 +22,7 @@ class Environment {
      * @author Guanyu Hu
      * @since 2022-10-30
      */
-    public static setTitle(prefix: string, suffix: string, separator: string) {
+    public static setTitle(prefix: string, suffix?: string, separator?: string) {
         if (prefix)
             if (suffix)
                 if (separator)
