@@ -35,3 +35,5 @@ class Environment {
             document.title = this.applicationName;
     }
 }
+
+export default Environment;
