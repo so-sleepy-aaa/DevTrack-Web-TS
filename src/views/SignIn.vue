@@ -7,7 +7,13 @@
 </template>
 
 <script setup>
+    import { onMounted } from "vue";
     import SignInForm from "@/components/forms/SignInForm";
+    import Environment from "@/api/Environment";
+
+    onMounted(() => {
+        Environment.setTitle("登录");
+    });
 </script>
 
 <style scoped>
