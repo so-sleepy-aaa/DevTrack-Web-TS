@@ -58,7 +58,7 @@
             axios.get(ApiUrl.signIn, { params: signInForm, timeout: 3000 }).then((res) => {
                 if (res.data.statusCode === StatusCode.success) {
                     showMessage("欢迎 " + res.data.resultData.nickname + " ！", "success");
-                    router.push("/");
+                    router.push({ name: "mainPage" });
                     sessionStorage.setItem("account", JSON.stringify(res.data.resultData));
                 }
                 if (res.data.statusCode === StatusCode.userNotExists)
