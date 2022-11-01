@@ -1,5 +1,5 @@
 <template>
-    <el-form :model="signUpForm" :rules="signUpFormRules" ref="signUpFormRef" label-position="top" label-width="80px">
+    <el-form :model="signUpForm" :rules="signUpFormRules" ref="signUpFormRef" label-position="top" label-width="80px" status-icon>
         <el-form-item prop="username" label="用户名">
             <el-input type="text" v-model="signUpForm.username"/>
         </el-form-item>
@@ -78,15 +78,18 @@
             const regex = new RegExp("^\\w{6,20}$");
             if (!regex.test(value))
                 callback("用户名由字母，数字和下划线组成，长度为6到20位。");
+            return callback();
         },
         password(rule: any, value: any, callback: any) {
             const regex = new RegExp("^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*,._])[0-9a-zA-Z!@#$%^&*,._]{8,16}$");
             if (!regex.test(value))
                 callback("密码由大写字母、小写字母、数字、符号组成，长度为8到16位。");
+            return callback();
         },
         confirmPassword(rule: any, value: any, callback: any) {
             if (value !== signUpForm.password)
                 callback("两次密码不一致！");
+            return callback();
         }
     };
 
@@ -128,6 +131,7 @@
         timer.start();
         const params = { email: signUpForm.email, taskType: 1 };
         axios(ApiUrl.sendVCode, { params, timeout: 3000 }).then((res) => {
+            showMessage("发送成功，请注意查收！", "success");
         }).catch((error) => {
             showMessage("请求超时，请稍后重试。", "error");
             requestingService.value = false;
@@ -140,10 +144,12 @@
             if (!valid) return;
 
             requestingService.value = true;
-            axios.get(ApiUrl.signUp, { params: signUpForm, timeout: 3000 }).then((res) => {
+            const newSignUpForm = JSON.parse(JSON.stringify(signUpForm));
+            delete newSignUpForm.confirmPassword;
+            axios.get(ApiUrl.signUp, { params: newSignUpForm, timeout: 3000 }).then((res) => {
                 if (res.data.statusCode === StatusCode.success) {
                     showMessage("注册成功！", "success");
-                    router.push("/singin");
+                    router.push({ name: "signIn" });
                 }
                 if (res.data.statusCode === StatusCode.userExists)
                     showMessage("用户名已存在！", "error");
