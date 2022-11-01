@@ -39,6 +39,7 @@
     import ApiUrl from "@/api/ApiUrl";
     import StatusCode from "@/api/StatusCode";
     import router from "@/router";
+    import TaskType from "@/api/TaskType";
 
     const signUpFormRef = ref<FormInstance>();
 
@@ -129,7 +130,7 @@
         }
 
         timer.start();
-        const params = { email: signUpForm.email, taskType: 1 };
+        const params = { email: signUpForm.email, taskType: TaskType.signUp };
         axios(ApiUrl.sendVCode, { params, timeout: 3000 }).then((res) => {
             showMessage("发送成功，请注意查收！", "success");
         }).catch((error) => {
