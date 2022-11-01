@@ -34,6 +34,34 @@ class Environment {
         else
             document.title = this.applicationName;
     }
+
+    /**
+     * 将图片转换为Base64编码。
+     *
+     * @param image 图片
+     * @param type 图片类型。
+     * @author Guanyu Hu
+     * @since 2022-11-01
+     */
+    public static imageToBase64(image: HTMLImageElement, type: "png" | "jpeg" | "jpg" | "gif") {
+        const canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(image, 0, 0, image.width, image.height);
+        return canvas.toDataURL("image/" + type);
+    }
+
+    public static imageFileToBase64(fileName: string) {
+        const type = <"png" | "jpeg" | "jpg" | "gif">fileName.split(".")[1];
+        let base64 = "";
+        const image = new Image();
+        image.src = fileName;
+        image.onload = () => {
+            base64 = this.imageToBase64(image, type);
+        };
+        return base64;
+    }
 }
 
 export default Environment;
