@@ -4,6 +4,7 @@ import HomeView from "@/views/HomeView.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import MainPage from "@/views/MainPage.vue";
+import mainPageChildren from "@/router/mainPage-children";
 
 const pages: Array<RouteRecordRaw> = [
     {
@@ -29,7 +30,8 @@ const pages: Array<RouteRecordRaw> = [
     {
         path: "/main",
         name: "mainPage",
-        component: MainPage
+        component: MainPage,
+        children: mainPageChildren
     }
 ];
 
