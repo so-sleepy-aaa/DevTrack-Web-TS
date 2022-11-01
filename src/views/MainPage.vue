@@ -45,11 +45,8 @@
 
     onMounted(() => {
         Environment.setTitle("主页");
-
-        if (JSON.parse(sessionStorage.getItem("account")).avatar == null)
-            avatar.value = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
-        else
-            avatar.value = "data:image/jpeg;base64," + JSON.parse(sessionStorage.getItem("account")).avatar;
+        
+        avatar.value = "data:image/jpeg;base64," + JSON.parse(sessionStorage.getItem("account")).avatar;
     });
 
     const sideBarList = reactive([
