@@ -35,8 +35,8 @@
         password: ""
     });
     const signInFormRules: FormRules = {
-        username: [{required: true, message: "请输入用户名。", trigger: "blur"}],
-        password: [{required: true, message: "请输入密码。", trigger: "blur"}],
+        username: [{ required: true, message: "请输入用户名。", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码。", trigger: "blur" }]
     };
 
     const signInFormRef = ref<FormInstance>();
@@ -50,26 +50,26 @@
         });
     }
 
-    const submitSignInForm = () => {
+    function submitSignInForm() {
         signInFormRef.value?.validate((valid) => {
-            if (valid) {
-                requestingService.value = true;
-                axios.get(ApiUrl.signIn, {params: signInForm, timeout: 3000}).then((res) => {
-                    if (res.data.statusCode === StatusCode.success) {
-                        showMessage("欢迎 " + res.data.resultData.nickname + " ！", "success");
-                        router.push("/");
-                        sessionStorage.setItem("account", JSON.stringify(res.data.resultData));
-                    }
-                    if (res.data.statusCode === StatusCode.userNotExists)
-                        showMessage("用户不存在！", "error");
-                    if (res.data.statusCode === StatusCode.passwordError)
-                        showMessage("密码错误！", "error");
-                    requestingService.value = false;
-                }).catch((error) => {
-                    showMessage("请求超时！", "error");
-                    requestingService.value = false;
-                });
-            }
+            if (!valid) return;
+
+            requestingService.value = true;
+            axios.get(ApiUrl.signIn, { params: signInForm, timeout: 3000 }).then((res) => {
+                if (res.data.statusCode === StatusCode.success) {
+                    showMessage("欢迎 " + res.data.resultData.nickname + " ！", "success");
+                    router.push("/");
+                    sessionStorage.setItem("account", JSON.stringify(res.data.resultData));
+                }
+                if (res.data.statusCode === StatusCode.userNotExists)
+                    showMessage("用户不存在！", "error");
+                if (res.data.statusCode === StatusCode.passwordError)
+                    showMessage("密码错误！", "error");
+                requestingService.value = false;
+            }).catch((error) => {
+                showMessage("请求超时！", "error");
+                requestingService.value = false;
+            });
         });
     };
 </script>
