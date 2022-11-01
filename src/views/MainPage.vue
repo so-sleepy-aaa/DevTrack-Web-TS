@@ -27,14 +27,13 @@
                     </el-menu-item>
                 </el-tooltip>
                 <el-menu-item class="main-menu-item">
-                    <!--                    <el-avatar :size="32" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>-->
                     <el-avatar :size="32" :src="avatar"/>
                 </el-menu-item>
             </el-menu>
         </el-aside>
 
         <el-main>
-            <!--TODO-->
+            <router-view/>
         </el-main>
     </el-container>
 </template>
