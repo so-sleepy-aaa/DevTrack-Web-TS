@@ -11,7 +11,7 @@
                 </el-menu-item>
             </el-menu>
 
-            <el-menu class="another-menu" background-color="#3e4963" text-color="white">
+            <el-menu class="another-menu" :router="true" background-color="#3e4963" text-color="white">
                 <el-tooltip placement="right" :hide-after="toolTipHideAfter" content="个人偏好设置">
                     <el-menu-item class="main-menu-item">
                         <el-icon>
@@ -26,7 +26,7 @@
                         </el-icon>
                     </el-menu-item>
                 </el-tooltip>
-                <el-menu-item class="main-menu-item">
+                <el-menu-item index="/profile" class="main-menu-item">
                     <el-avatar :size="32" :src="avatar"/>
                 </el-menu-item>
             </el-menu>
@@ -38,14 +38,15 @@
     </el-container>
 </template>
 
-<script setup>
+<script lang="ts" setup>
     import { onMounted, reactive, ref } from "vue";
     import Environment from "@/api/Environment";
 
     onMounted(() => {
         Environment.setTitle("主页");
-        
-        avatar.value = "data:image/jpeg;base64," + JSON.parse(sessionStorage.getItem("account")).avatar;
+
+        if (JSON.parse(sessionStorage.getItem("account")) != null)
+            avatar.value = "data:image/jpeg;base64," + JSON.parse(sessionStorage.getItem("account")).avatar;
     });
 
     const sideBarList = reactive([
