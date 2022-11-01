@@ -7,7 +7,13 @@
 </template>
 
 <script setup>
+    import { onMounted } from "vue";
     import SignUpForm from "@/components/forms/SignUpForm";
+    import Environment from "@/api/Environment";
+
+    onMounted(() => {
+        Environment.setTitle("注册");
+    });
 </script>
 
 <style scoped>
